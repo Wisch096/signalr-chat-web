@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import * as signalr from '@microsoft/signalr'
 
 interface Message {
   userName: string,
@@ -12,18 +13,36 @@ interface Message {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  messages: Message[] = [
-    {
-      text: 'Olá',
-      userName: 'Matheus'
-    },
-    {
-      text: 'Olá',
-      userName: 'Laís'
-    },
-  ];
+  messages: Message[] = [];
   messageControl = new FormControl('');
   userName: string = 'Matheus';
+  connection = new signalr.HubConnectionBuilder()
+    .withUrl("http://localhost:5259/chat")
+    .build();
 
-  sendMessage() {}
+  constructor() {
+    this.startConnection();
+  }
+
+  startConnection() {
+    this.connection.on("newMessage", (userName: string, text: string) => {
+      this.messages.push({
+        text: text,
+        userName: userName
+      });
+    });
+    this.connection.start();
+    console.log("startiys")
+  }
+
+  sendMessage() {
+    console.log(this.messageControl.value);
+    this.connection.send("newMessage", this.userName, this.messageControl.value)
+      .then(() => {
+        console.log(this.messages);
+        this.messageControl.setValue('');
+        console.log("akjskaj");
+        
+      });
+  }
 }
