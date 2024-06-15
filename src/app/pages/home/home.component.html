@@ -4,15 +4,28 @@
     </mat-toolbar>
     <div class="messages">
         <ng-template ngFor let-message [ngForOf]="messages" let-i="index">
-        </ng-template>
+            <div *ngIf="message.userName == userName" class="message-line me">
+                <div class="message me">
+                    <div class="user-name me">{{message.userName}}</div>
+                    <div >{{message.text}}</div>
+                </div>
+            </div>
+            <div *ngIf="message.userName != userName" class="message-line other">
+                <div class="message other">
+                    <div class="user-name other">{{message.userName}}</div>
+                    <div >{{message.text}}</div>
+                </div>
+            </div>
+        </ng-template> 
     </div>
     <div class="footer">
         <form class="form">
-            <mat-form-field class="input">
+            <mat-form-field mat-mini-fab class="input">
                 <mat-label>Escreva sua mensagem</mat-label>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                 <input matInput placeholder="Olá" [formControl]="messageControl">
             </mat-form-field>
-            <button class="send" (click)="sendMessage" mat-mini-fab aria-label="Enviar">
+            <button class="send" color="primary" (click)="sendMessage" mat-mini-fab aria-label="Enviar">
                 <mat-icon>send</mat-icon>
             </button>
         </form>

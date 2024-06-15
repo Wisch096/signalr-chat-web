@@ -12,10 +12,18 @@ interface Message {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  messages: Message[] = [];
+  messages: Message[] = [
+    {
+      text: 'Olá',
+      userName: 'Matheus'
+    },
+    {
+      text: 'Olá',
+      userName: 'Laís'
+    },
+  ];
   messageControl = new FormControl('');
+  userName: string = 'Matheus';
 
-  sendMessage() {
-    
-  }
+  sendMessage() {}
 }
