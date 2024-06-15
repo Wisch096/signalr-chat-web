@@ -1,1 +1,20 @@
-<p>home works!</p>
+<div class="container">
+    <mat-toolbar color="secondary">
+        <span>SignalR Chat</span>
+    </mat-toolbar>
+    <div class="messages">
+        <ng-template ngFor let-message [ngForOf]="messages" let-i="index">
+        </ng-template>
+    </div>
+    <div class="footer">
+        <form class="form">
+            <mat-form-field class="input">
+                <mat-label>Escreva sua mensagem</mat-label>
+                <input matInput placeholder="Olá" [formControl]="messageControl">
+            </mat-form-field>
+            <button class="send" (click)="sendMessage" mat-mini-fab aria-label="Enviar">
+                <mat-icon>send</mat-icon>
+            </button>
+        </form>
+    </div>
+</div>
