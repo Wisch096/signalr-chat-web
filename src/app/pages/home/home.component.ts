@@ -17,7 +17,7 @@ interface Message {
 export class HomeComponent {
   messages: Message[] = [];
   messageControl = new FormControl('');
-  userName: string = 'Matheus';
+  userName!: string;
   connection = new signalr.HubConnectionBuilder()
     .withUrl("http://localhost:5259/chat")
     .build();
