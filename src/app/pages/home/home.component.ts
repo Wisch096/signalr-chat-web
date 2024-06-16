@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import * as signalr from '@microsoft/signalr'
+import { NameDialogComponent } from 'src/app/shared/name-dialog/name-dialog.component';
 
 interface Message {
   userName: string,
@@ -20,8 +22,20 @@ export class HomeComponent {
     .withUrl("http://localhost:5259/chat")
     .build();
 
-  constructor() {
-    this.startConnection();
+  constructor(public dialog: MatDialog) {
+    this.openDialog();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(NameDialogComponent, {
+      width: '250px',
+      data: this.userName,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.userName = result;
+      this.startConnection();
+    });
   }
 
   startConnection() {
@@ -42,7 +56,7 @@ export class HomeComponent {
         console.log(this.messages);
         this.messageControl.setValue('');
         console.log("akjskaj");
-        
+
       });
   }
 }
