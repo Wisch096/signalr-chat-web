@@ -46,17 +46,13 @@ export class HomeComponent {
       });
     });
     this.connection.start();
-    console.log("startiys")
   }
 
   sendMessage() {
     console.log(this.messageControl.value);
     this.connection.send("newMessage", this.userName, this.messageControl.value)
       .then(() => {
-        console.log(this.messages);
         this.messageControl.setValue('');
-        console.log("akjskaj");
-
       });
   }
 }
